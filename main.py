@@ -27,19 +27,23 @@ def solve(input):
     x_upper_bound = len(input[0]) - 1
     y_upper_bound = len(input) - 1
     output = []
+    length = len(input[0]) * len(input)
 
-    for i in range(20):
-        output, x, y, y_lower_bound = move(input, output, x, y, "right", y_lower_bound, x_upper_bound)
-        output, x, y, x_upper_bound = move(input, output, x, y, "down", x_upper_bound, y_upper_bound)
-        output, x, y, y_upper_bound = move(input, output, x, y, "left", y_upper_bound, x_lower_bound)
-        output, x, y, x_lower_bound = move(input, output, x, y, "up", x_lower_bound, y_lower_bound)
+    while len(output) < length:
+        output, x, y, y_lower_bound = move(input, output, x, y, "right", y_lower_bound, x_upper_bound, length)
+        output, x, y, x_upper_bound = move(input, output, x, y, "down", x_upper_bound, y_upper_bound, length)
+        output, x, y, y_upper_bound = move(input, output, x, y, "left", y_upper_bound, x_lower_bound, length)
+        output, x, y, x_lower_bound = move(input, output, x, y, "up", x_lower_bound, y_lower_bound, length)
     
     return output
 
-def move(input, output, x, y, mode, bound_to_change, bound):
+def move(input, output, x, y, mode, bound_to_change, bound, length):
     while True:
+        if len(output) >= length:
+            break
+        #print(x,y)
         output.append(input[y][x])
-        print(output)
+        #print(output)
         if mode == "right":
             x += 1
             axis = x
@@ -58,7 +62,6 @@ def move(input, output, x, y, mode, bound_to_change, bound):
             direction = 1
 
         if axis == bound:
-            print("turning")
             bound_to_change += direction
             break
 
