@@ -34,7 +34,15 @@ def main():
     [ 4, 3]
     ]
 
-    print(solve(input_1))
+    input_5 = [
+    [ 1, 2, 3],
+    [12,13, 4],
+    [11,14, 5],
+    [10,15, 6],
+    [ 9, 8, 7],
+    ]
+
+    print(solve(input_5))
 
 def solve(input):
     output = []
