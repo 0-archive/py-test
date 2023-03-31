@@ -28,8 +28,13 @@ def main():
     [22, 23, 24, 25, 26, 27, 28, 29, 30, 11],
     [21, 20, 19, 18, 17, 16, 15, 14, 13, 12], 
     ]
+    
+    input_4 = [
+    [ 1, 2],
+    [ 4, 3]
+    ]
 
-    print(solve(input_3))
+    print(solve(input_1))
 
 def solve(input):
     output = []
@@ -39,23 +44,34 @@ def solve(input):
     y = 0
     direction = 1
     length = len(input[0]) * len(input)
-    print(length)
 
+    # We loop until we return
     while True:
+        # We move around the spiral:
         for i in range(2):
+            # X axis
             for j in range(dist_x):
+                # Check to see if we're done
                 if len(output) >= length:
                     return output
                 output.append(input[y][x])
                 x += direction
+            # Y axis
             for j in range(dist_y):
+                # Check to see if we're done
                 if len(output) >= length:
                     return output
                 output.append(input[y][x])
                 y += direction
+            # Swap the direction for the next loop
             direction = - direction
+        # Check to see if we're done
+        if len(output) >= length:
+            return output
+        # After each loop, the distance must go down by 2.
         dist_x -= 2
         dist_y -= 2
+        # This moves us into the correct position for the start of the next loop.
         y += direction
         x += direction
 
