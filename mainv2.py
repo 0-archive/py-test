@@ -19,56 +19,31 @@ def main():
     print(solve(input))
 
 def solve(input):
+    output = []
+    dist_x = len(input[0]) - 1
+    dist_y = len(input) - 1
     x = 0
     y = 0
-    x_lower_bound = 0
-    y_lower_bound = 0
-    x_upper_bound = len(input[0]) - 1
-    y_upper_bound = len(input) - 1
-    output = []
+    direction = 1
     length = len(input[0]) * len(input)
 
-    # Loop until finished, going right, down, left, and up.
-    while len(output) < length:
-        output, x, y, y_lower_bound = move(input, output, x, y, "right", y_lower_bound, x_upper_bound, length)
-        output, x, y, x_upper_bound = move(input, output, x, y, "down", x_upper_bound, y_upper_bound, length)
-        output, x, y, y_upper_bound = move(input, output, x, y, "left", y_upper_bound, x_lower_bound, length)
-        output, x, y, x_lower_bound = move(input, output, x, y, "up", x_lower_bound, y_lower_bound, length)
-    
-    return output
-
-def move(input, output, x, y, mode, bound_to_change, bound, length):
     while True:
-        # If the output is already the correct length, stop.
-        if len(output) >= length:
-            break
-        # Else add the current digit to the output
-        output.append(input[y][x])
-        # Set the necessary info based on what direction we're going
-        if mode == "right":
-            x += 1
-            axis = x
-            direction = 1
-        elif mode == "left":
-            x -= 1
-            axis = x 
-            direction = -1
-        elif mode == "down":
-            y += 1
-            axis = y
-            direction = -1
-        elif mode == "up":
-            y -= 1
-            axis = y
-            direction = 1
-
-        # If we're at the boundary, move the bound that needs to be changed
-        # and then break.
-        if axis == bound:
-            bound_to_change += direction
+        for i in range(2):
+            for j in range(dist_x):
+                output.append(input[y][x])
+                x += direction
+            for j in range(dist_y):
+                output.append(input[y][x])
+                y += direction
+            direction = - direction
+        dist_x -= 2
+        dist_y -= 2
+        y += direction
+        x += direction
+        if dist_x <= 0 and dist_y <= 0:
             break
 
-    return output, x, y, bound_to_change
+    return output
 
 if __name__ == "__main__":
     main()
